@@ -1,4 +1,43 @@
 const fs = require("fs");
+
+const initalOutcomePattern = {
+  "A X": 4,
+  "A Y": 8,
+  "A Z": 3,
+  "B X": 1,
+  "B Y": 5,
+  "B Z": 9,
+  "C X": 7,
+  "C Y": 2,
+  "C Z": 6,
+};
+
+const realOutcomePattern = {
+  "A X": 3,
+  "A Y": 4,
+  "A Z": 8,
+  "B X": 1,
+  "B Y": 5,
+  "B Z": 9,
+  "C X": 2,
+  "C Y": 6,
+  "C Z": 7,
+};
+
+const rpsDuel = (pair, patternMap) => patternMap[pair];
+
+const getTotalScore = (formattedString, movePattern) => {
+  let allScores = formattedString.map((pair) => rpsDuel(pair, movePattern));
+  return allScores.reduce((sum, num) => sum + num, 0);
+};
+
+fs.readFile("input.txt", "utf-8", (err, data) => {
+  if (err) console.log(err);
+  let splitString = data.split(/\n/);
+  console.log(getTotalScore(splitString, outcomePattern));
+  console.log(getTotalScore(splitString, realOutcomePattern));
+});
+
 // A === Rock === X
 // B === Paper === Y
 // C === Scissors === Z
@@ -32,19 +71,48 @@ const fs = require("fs");
 // };
 
 // Fourth Structure: Combine the pairs to remove the string split
-const outcomeScore = {
-  "A X": 4,
-  "A Y": 8,
-  "A Z": 3,
-  "B X": 1,
-  "B Y": 5,
-  "B Z": 9,
-  "C X": 7,
-  "C Y": 2,
-  "C Z": 6,
-};
+// const outcomePattern = {
+//   "A X": 4,
+//   "A Y": 8,
+//   "A Z": 3,
+//   "B X": 1,
+//   "B Y": 5,
+//   "B Z": 9,
+//   "C X": 7,
+//   "C Y": 2,
+//   "C Z": 6,
+// };
 
-const rpsDuel = (pair) => outcomeScore[pair];
+// step 2
+// X --> lose
+// Y --> draw
+// Z --> win
+
+// Map moves to outcome
+// const realOutcomeScore = {
+//   A: {X: 3, Y: 4, Z: 8},
+//   B: {X: 1, Y: 5, Z: 9},
+//   C: {X: 2, Y: 6, Z: 7},
+// }
+
+// const realOutcomePattern = {
+//   "A X": 3,
+//   "A Y": 4,
+//   "A Z": 8,
+//   "B X": 1,
+//   "B Y": 5,
+//   "B Z": 9,
+//   "C X": 2,
+//   "C Y": 6,
+//   "C Z": 7,
+// };
+
+// const rpsDuel = (pair, patternMap) => patternMap[pair];
+
+// const getTotalScore = (splitString, movePattern) => {
+//   let allScores = splitString.map((pair) => rpsDuel(pair, movePattern));
+//   return allScores.reduce((sum, num) => sum + num, 0);
+// };
 
 fs.readFile("input.txt", "utf-8", (err, data) => {
   if (err) {
@@ -52,17 +120,13 @@ fs.readFile("input.txt", "utf-8", (err, data) => {
     return;
   }
   let splitString = data.split(/\n/);
-  let score = splitString.map(rpsDuel);
-  let totalScore = score.reduce((sum, num) => sum + num, 0);
-  console.log(totalScore);
+  console.log(getTotalScore(splitString, outcomePattern));
+  console.log(getTotalScore(splitString, realOutcomePattern));
 });
 
-// gold start achieved
+// with proper data patterns, we don't need to edit the function
 
-// step 2
-// X --> lose
-// Y --> draw
-// Z --> win
+// gold start achieved
 
 // const outcomes = {
 //   X: 0,
