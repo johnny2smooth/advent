@@ -34,7 +34,7 @@ const getTotalScore = (formattedString, movePattern) => {
 fs.readFile("input.txt", "utf-8", (err, data) => {
   if (err) console.log(err);
   let splitString = data.split(/\n/);
-  console.log(getTotalScore(splitString, outcomePattern));
+  console.log(getTotalScore(splitString, initalOutcomePattern));
   console.log(getTotalScore(splitString, realOutcomePattern));
 });
 
@@ -114,15 +114,15 @@ fs.readFile("input.txt", "utf-8", (err, data) => {
 //   return allScores.reduce((sum, num) => sum + num, 0);
 // };
 
-fs.readFile("input.txt", "utf-8", (err, data) => {
-  if (err) {
-    console.log(err);
-    return;
-  }
-  let splitString = data.split(/\n/);
-  console.log(getTotalScore(splitString, outcomePattern));
-  console.log(getTotalScore(splitString, realOutcomePattern));
-});
+// fs.readFile("input.txt", "utf-8", (err, data) => {
+//   if (err) {
+//     console.log(err);
+//     return;
+//   }
+//   let splitString = data.split(/\n/);
+//   console.log(getTotalScore(splitString, outcomePattern));
+//   console.log(getTotalScore(splitString, realOutcomePattern));
+// });
 
 // with proper data patterns, we don't need to edit the function
 
