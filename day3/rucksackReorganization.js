@@ -137,12 +137,12 @@ Array(...priorityString).forEach((item, i) => (priorityMap[item] = i + 1));
 // functional programming way
 
 //
-let testString = `vJrwpWtwJgWrhcsFMMfFFhFp
-jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
-PmmdzqPrVvPwwTWBwg
-wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
-ttgJtRGJQctTZtZT
-CrZsJsPPZsGzwwsLwLmpwMDw`;
+// let testString = `vJrwpWtwJgWrhcsFMMfFFhFp
+// jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+// PmmdzqPrVvPwwTWBwg
+// wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+// ttgJtRGJQctTZtZT
+// CrZsJsPPZsGzwwsLwLmpwMDw`;
 
 const testSack = "vJrwpWtwJgWrhcsFMMfFFhFp";
 
@@ -159,25 +159,83 @@ const findDuplicate = ([firstHalf, secondHalf]) => {
 
 // calculate the priority
 // - 96
-const calculatePriority = (duplicate) =>
-  duplicate.charCodeAt() - (duplicate.charCodeAt() >= 97 ? 96 : 38);
+const calculatePriority = (duplicate) => {
+  return duplicate.charCodeAt() - (duplicate.charCodeAt() >= 97 ? 96 : 38);
+};
 
 const sumReducer = (sum, num) => sum + num;
 
-let total = testString
-  .split(/\n/)
-  .map(divideRucksack)
-  .map(findDuplicate)
-  .map(calculatePriority)
-  .reduce(sumReducer);
+// let total = testString
+//   .split(/\n/)
+//   .map(divideRucksack)
+//   .map(findDuplicate)
+//   .map(calculatePriority)
+//   .reduce(sumReducer);
+
+// fs.readFile("input.txt", "utf-8", (err, data) => {
+//   if (err) console.log(err);
+//   let total = data
+//     .split(/\n/)
+//     .map(divideRucksack)
+//     .map(findDuplicate)
+//     .map(calculatePriority)
+//     .reduce(sumReducer);
+// });
+
+// part two
+let testString = `vJrwpWtwJgWrhcsFMMfFFhFp
+jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+PmmdzqPrVvPwwTWBwg
+wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+ttgJtRGJQctTZtZT
+CrZsJsPPZsGzwwsLwLmpwMDw`;
+
+// split into groups of three
+const groupByTrio = (groupArr) => {
+  if (groupArr.length === 0) return [];
+  return [groupArr.slice(0, 3), ...groupByTrio(groupArr.slice(3))];
+};
+// console.log(groupByTrio(testString.split(/\n/)));
+
+// const firstGroup = [
+//   "vJrwpWtwJgWrhcsFMMfFFhFp",
+//   "jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL",
+//   "PmmdzqPrVvPwwTWBwg",
+// ];
+
+// const secondGroup = [
+//   "wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn",
+//   "ttgJtRGJQctTZtZT",
+//   "CrZsJsPPZsGzwwsLwLmpwMDw",
+// ];
+
+// find Unique badge
+const getUniqueBadge = ([first, second, third]) => {
+  const [firstSet, secondSet] = [new Set(first), new Set(second)];
+  return [...third].find(
+    (badge) => firstSet.has(badge) && secondSet.has(badge)
+  );
+};
+// console.log(getUniqueBadge(secondGroup));
+
+console.log(
+  groupByTrio(testString.split(/\n/))
+    .map(getUniqueBadge)
+    .map(calculatePriority)
+    .reduce(sumReducer)
+);
 
 fs.readFile("input.txt", "utf-8", (err, data) => {
   if (err) console.log(err);
-  let total = data
+  let firstSolution = data
     .split(/\n/)
     .map(divideRucksack)
     .map(findDuplicate)
     .map(calculatePriority)
     .reduce(sumReducer);
-  console.log(total);
+  let secondSolution = groupByTrio(data.trim().split(/\n/))
+    .map(getUniqueBadge)
+    .map(calculatePriority)
+    .reduce(sumReducer);
+  console.log({ firstSolution, secondSolution });
 });
