@@ -30,9 +30,12 @@ const replaceLettersWithCommas = (string: string) =>
 const moveCrates = ([move, from, to]: string[]) =>
   stack[to].push(...stack[from].splice(-Number(move)).reverse());
 
+const moveCrates9001 = ([move, from, to]: string[]) =>
+  stack[to].push(...stack[from].splice(-Number(move)));
+
 fs.readFile("input.txt", "utf-8", (err, data) => {
   if (err) throw err;
-  data.trim().split(/\n/).map(replaceLettersWithCommas).forEach(moveCrates);
+  data.trim().split(/\n/).map(replaceLettersWithCommas).forEach(moveCrates9001);
 
   console.log(
     Object.values(stack)

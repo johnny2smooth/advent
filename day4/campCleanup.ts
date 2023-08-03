@@ -14,9 +14,8 @@ const test = `14-38,14-14
 22-23,22-95
 3-82,3-35`;
 
-const splitStringPair = (pair: string) => {
-  return pair.split(",").map((string) => string.split("-").map((val) => +val));
-};
+const splitStringPair = (pair: string) =>
+  pair.split(",").map((string) => string.split("-").map((val) => +val));
 
 function isOverlapping([
   [firstStart, firstEnd],
@@ -24,12 +23,6 @@ function isOverlapping([
 ]: number[][]): boolean {
   return firstStart <= secondEnd && firstEnd >= secondStart;
 }
-
-// function isOverlapping([first, second]: number[][]) {
-//   let [firstStart, firstEnd] = first;
-//   let [secondStart, secondEnd] = second;
-//   return firstStart <= secondEnd && firstEnd >= secondStart;
-// }
 
 function isFullyContained([first, second]: number[][]) {
   return (
